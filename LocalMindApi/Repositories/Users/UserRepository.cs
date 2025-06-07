@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using LocalMindApi.DataContext;
 using LocalMindApi.Models.Users;
+using Microsoft.EntityFrameworkCore;
 
 namespace LocalMindApi.Repositories.Users
 {
@@ -23,6 +24,6 @@ namespace LocalMindApi.Repositories.Users
         }
 
         public IQueryable<User> SelectAllUsers() =>
-            this.context.Users;
+            this.context.Users.Include(user => user.UserAdditionalDetail);
     }
 }

@@ -25,6 +25,8 @@ namespace LocalMindApi.DataContext
             modelBuilder.Entity<UserAdditionalDetail>()
                 .HasOne(userAdditionalDetail => userAdditionalDetail.User)
                 .WithOne(user => user.UserAdditionalDetail)
+                .HasForeignKey<UserAdditionalDetail>(
+                    userAdditionalDetail => userAdditionalDetail.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);

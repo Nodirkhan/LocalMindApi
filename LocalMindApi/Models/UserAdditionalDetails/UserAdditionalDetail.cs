@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using LocalMindApi.Models.Users;
 
 namespace LocalMindApi.Models.UserAdditionalDetails
@@ -12,7 +11,6 @@ namespace LocalMindApi.Models.UserAdditionalDetails
         public string Email { get; set; }
         public string Country { get; set; }
 
-        [ForeignKey("Users")]
         public Guid UserId { get; set; }
         public User User { get; set; }
     }

@@ -1,5 +1,7 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using LocalMindApi.DataContext;
+using LocalMindApi.Repositories.UserAdditionalDetails;
 using LocalMindApi.Repositories.Users;
 using LocalMindApi.Services.Accounts;
 using LocalMindApi.Services.Users;
@@ -43,8 +45,13 @@ namespace LocalMindApi
 
             builder.Services.AddAuthorization();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.WriteIndented = true;
+            });
             builder.Services.AddTransient<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IUserAdditionalDetailRepository, UserAdditionalDetailRepository>();
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IAccountService, AccountService>();
             builder.Services.AddDbContext<ApplicationDbContext>();
