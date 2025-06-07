@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using LocalMindApi.Models.UserAdditionalDetails;
 
 namespace LocalMindApi.Models.Users
 {
