@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using LocalMindApi.DTOs;
+using LocalMindApi.Helpers.LocalMindApi.Helpers;
 using LocalMindApi.Models.Users;
 using LocalMindApi.Repositories.UserAdditionalDetails;
 using LocalMindApi.Repositories.Users;
@@ -20,11 +22,10 @@ namespace LocalMindApi.Services.Users
             this.userAdditionalDetailRepository = userAdditionalDetailRepository;
         }
 
-        public async ValueTask<User> AddUserAsync(User user)
+        public async ValueTask<UserDto> AddUserAsync(UserDto userDto)
         {
-            DateTimeOffset now = DateTimeOffset.UtcNow;
-            user.CreatedDate = now;
-            user.UpdatedDate = now;
+            User user = MapToUser(userDto);
+            user.HashedPassword = HashingHelper.GetHash(userDto.Password);
 
             await this.userRepository.InsertUserAsync(user);
 
@@ -34,12 +35,46 @@ namespace LocalMindApi.Services.Users
                     .InsertUserAdditionalDetailAsync(user.UserAdditionalDetail);
             }
 
-            return user;
+            return userDto;
         }
 
-        public IQueryable<User> RetrieveAllUsers()
+        public IQueryable<UserDto> RetrieveAllUsers()
         {
-            return this.userRepository.SelectAllUsers();
+            return this.userRepository.SelectAllUsers()
+                .Select(MapToUserDto).AsQueryable();
+        }
+
+        private static User MapToUser(UserDto userDto)
+        {
+            DateTimeOffset now = DateTimeOffset.UtcNow;
+            Guid newId = Guid.NewGuid();
+
+            return new User
+            {
+                Id = newId,
+                Username = userDto.Username,
+                HashedPassword = userDto.Password,
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                PhoneNumber = userDto.PhoneNumber,
+                Role = userDto.Role,
+                CreatedDate = now,
+                UpdatedDate = now,
+                UserAdditionalDetail = userDto.UserAdditionalDetail
+            };
+        }
+
+        private static UserDto MapToUserDto(User user)
+        {
+            return new UserDto
+            {
+                Username = user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                Role = user.Role,
+                UserAdditionalDetail = user.UserAdditionalDetail
+            };
         }
     }
 }
