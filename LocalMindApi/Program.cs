@@ -5,6 +5,7 @@ using LocalMindApi.Middlewares;
 using LocalMindApi.Repositories;
 using LocalMindApi.Repositories.ChatDetails;
 using LocalMindApi.Repositories.Chats;
+using LocalMindApi.Repositories.LocalAIs;
 using LocalMindApi.Repositories.UserAdditionalDetails;
 using LocalMindApi.Repositories.Users;
 using LocalMindApi.Services.Accounts;
@@ -60,6 +61,7 @@ namespace LocalMindApi
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IChatRepository, ChatRepository>();
             builder.Services.AddTransient<IChatDetailRepository, ChatDetailRepository>();
+            builder.Services.AddTransient<ILocalAIApiRepository, LocalAIApiRepository>();
             builder.Services.AddTransient<IUserAdditionalDetailRepository, UserAdditionalDetailRepository>();
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IAccountService, AccountService>();
