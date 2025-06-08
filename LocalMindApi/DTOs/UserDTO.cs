@@ -1,20 +1,16 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using LocalMindApi.Models.UserAdditionalDetails;
+using LocalMindApi.Models.Users;
 
-namespace LocalMindApi.Models.Users
+namespace LocalMindApi.DTOs
 {
-    public class User
+    public class UserDTO
     {
-        [Key]
-        [Required]
-        public Guid Id { get; set; }
-
         [Required]
         public string Username { get; set; }
 
         [Required]
-        public string HashedPassword { get; set; }
+        public string Password { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -28,9 +24,6 @@ namespace LocalMindApi.Models.Users
         public string PhoneNumber { get; set; }
 
         public Role Role { get; set; }
-
-        public DateTimeOffset CreatedDate { get; set; }
-        public DateTimeOffset UpdatedDate { get; set; }
 
         public UserAdditionalDetail UserAdditionalDetail { get; set; }
     }

@@ -29,6 +29,10 @@ namespace LocalMindApi.DataContext
                     userAdditionalDetail => userAdditionalDetail.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<User>()
+                .HasIndex(user => user.Username)
+                .IsUnique();
+
             base.OnModelCreating(modelBuilder);
         }
 

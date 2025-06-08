@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using LocalMindApi.DTOs;
 using LocalMindApi.Models.Users;
 using LocalMindApi.Services.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -20,18 +21,18 @@ namespace LocalMindApi.Controllers
         }
 
         [HttpPost]
-        public async ValueTask<ActionResult<User>> PostUserAsync([FromBody] User user)
+        public async ValueTask<ActionResult<User>> PostUserAsync([FromBody] UserDTO userDTO)
         {
-            User newUser =
-                await this.userService.AddUserAsync(user);
+            UserDTO newUser =
+                await this.userService.AddUserAsync(userDTO);
 
-            return StatusCode(201, user);
+            return StatusCode(201, userDTO);
         }
 
         [HttpGet]
-        public ActionResult<IQueryable<User>> GetAllUsers()
+        public ActionResult<IQueryable<UserDTO>> GetAllUsers()
         {
-            IQueryable<User> users =
+            IQueryable<UserDTO> users =
                 this.userService.RetrieveAllUsers();
 
             return Ok(users);

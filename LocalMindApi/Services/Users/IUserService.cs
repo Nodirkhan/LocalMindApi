@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using LocalMindApi.Models.Users;
+using LocalMindApi.DTOs;
 
 namespace LocalMindApi.Services.Users
 {
     public interface IUserService
     {
-        ValueTask<User> AddUserAsync(User user);
-        IQueryable<User> RetrieveAllUsers();
+        ValueTask<UserDTO> AddUserAsync(UserDTO userDTO);
+        IQueryable<UserDTO> RetrieveAllUsers();
     }
 }
