@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json.Serialization;
 using LocalMindApi.DataContext;
+using LocalMindApi.Middlewares;
 using LocalMindApi.Repositories.UserAdditionalDetails;
 using LocalMindApi.Repositories.Users;
 using LocalMindApi.Services.Accounts;
@@ -42,7 +43,8 @@ namespace LocalMindApi
                         Encoding.UTF8.GetBytes(builder.Configuration["AuthConfiguration:Key"]!))
                 };
             });
-
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
             builder.Services.AddAuthorization();
 
             builder.Services.AddControllers().AddJsonOptions(options =>
@@ -64,7 +66,7 @@ namespace LocalMindApi
                 app.MapOpenApi();
                 app.MapScalarApiReference();
             }
-
+            app.UseExceptionHandler();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
