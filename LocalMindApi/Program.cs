@@ -2,9 +2,14 @@ using System.Text;
 using System.Text.Json.Serialization;
 using LocalMindApi.DataContext;
 using LocalMindApi.Middlewares;
+using LocalMindApi.Repositories;
+using LocalMindApi.Repositories.ChatDetails;
+using LocalMindApi.Repositories.Chats;
 using LocalMindApi.Repositories.UserAdditionalDetails;
 using LocalMindApi.Repositories.Users;
 using LocalMindApi.Services.Accounts;
+using LocalMindApi.Services.ChatDetails;
+using LocalMindApi.Services.Chats;
 using LocalMindApi.Services.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -53,9 +58,13 @@ namespace LocalMindApi
                 options.JsonSerializerOptions.WriteIndented = true;
             });
             builder.Services.AddTransient<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IChatRepository, ChatRepository>();
+            builder.Services.AddTransient<IChatDetailRepository, ChatDetailRepository>();
             builder.Services.AddTransient<IUserAdditionalDetailRepository, UserAdditionalDetailRepository>();
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IAccountService, AccountService>();
+            builder.Services.AddTransient<IChatService, ChatService>();
+            builder.Services.AddTransient<IChatDetailService, ChatDetailService>();
             builder.Services.AddDbContext<ApplicationDbContext>();
             builder.Services.AddOpenApi();
 
