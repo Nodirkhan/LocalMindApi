@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using LocalMindApi.Models.Chats;
 using LocalMindApi.Models.UserAdditionalDetails;
 
 namespace LocalMindApi.Models.Users
@@ -33,5 +35,6 @@ namespace LocalMindApi.Models.Users
         public DateTimeOffset UpdatedDate { get; set; }
 
         public UserAdditionalDetail UserAdditionalDetail { get; set; }
+        public virtual ICollection<Chat> Chats { get; set; }
     }
 }
